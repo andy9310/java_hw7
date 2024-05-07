@@ -33,6 +33,11 @@ class test{
                 Collections.sort(student_answer);
                 if(!deepEquals(student_answer, cmd.answer))
                 {
+                    System.out.println(student_answer);
+                    System.out.println("++++++++++");
+                    System.out.println(cmd.answer);
+                    System.out.println("++++++++++");
+                    IST.check_left_node(IST.root);
                     return false;
                 }
             }

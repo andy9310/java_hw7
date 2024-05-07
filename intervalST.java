@@ -1,6 +1,6 @@
 import java.util.*;
 class IntervalST<Key extends Comparable<Key>, Value>{
-    private Node root;
+    public Node root;
 
     private class Node {
         private Key lo, hi, max;
@@ -60,8 +60,10 @@ class IntervalST<Key extends Comparable<Key>, Value>{
     ////
     private Key max(Node x) {
         if (x == null) return null;
-        if (x.right == null) return x.hi;
-        else return max(x.right);
+        if (x.right == null && x.left != null) return max(x.hi,max(x.left));
+        if (x.left == null && x.right != null) return max(x.hi,max(x.right));
+        if (x.left == null && x.right == null) return x.hi;
+        else return max3(x.hi,max(x.right),max(x.left));
     }
 
     private Key max3(Key a, Key b, Key c) {
@@ -125,7 +127,7 @@ class IntervalST<Key extends Comparable<Key>, Value>{
     }
     private void intersects(Node x, Key lo, Key hi, List<Value> result) {
         if (x == null){
-            System.out.println("null");
+            // System.out.println("null");
             return;
         }
         if (intersects(x.lo, x.hi, lo, hi)) result.add(x.val);
@@ -140,10 +142,15 @@ class IntervalST<Key extends Comparable<Key>, Value>{
     private boolean intersects(Key lo1, Key hi1, Key lo2, Key hi2) {
         return lo1.compareTo(hi2) <= 0 && hi1.compareTo(lo2) >= 0;
     }
-    private void check_right_node(Node x){
+    public void check_right_node(Node x){
         if(x == null) return;
         System.out.println(x.val);
         check_right_node(x.right);
+    }
+    public void check_left_node(Node x){
+        if(x == null) return;
+        System.out.println(x.val);
+        check_left_node(x.left);
     }
 
 
